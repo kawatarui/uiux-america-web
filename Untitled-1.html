@@ -1,0 +1,521 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カリフォルニア海外研修 - サンフランシスコ・シリコンバレー・ロサンゼルス</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #dc143c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '🇺🇸';
+            position: absolute;
+            font-size: 300px;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+        
+        .hero-content {
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            font-size: 2em;
+            cursor: pointer;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-20px); }
+            60% { transform: translateX(-50%) translateY(-10px); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+        
+        section {
+            margin-bottom: 100px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        h2 {
+            font-size: 2.5em;
+            color: #1e3c72;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #1e3c72, #dc143c);
+            border-radius: 2px;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .comparison-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .comparison-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #1e3c72, #dc143c);
+        }
+        
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.5em;
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .card-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .country-section {
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .japan {
+            background: #ffe6e6;
+            border-left: 4px solid #dc143c;
+        }
+        
+        .usa {
+            background: #e6f0ff;
+            border-left: 4px solid #1e3c72;
+        }
+        
+        .country-label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .surprise-section {
+            background: linear-gradient(135deg, #1e3c72 0%, #dc143c 100%);
+            padding: 60px 40px;
+            border-radius: 25px;
+            color: white;
+        }
+        
+        .surprise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .surprise-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+        
+        .surprise-item:hover {
+            transform: scale(1.05);
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .surprise-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .experience-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .experience-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .experience-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #1e3c72 0%, #dc143c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+        }
+        
+        .experience-content {
+            padding: 20px;
+        }
+        
+        .experience-title {
+            font-size: 1.3em;
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #dc143c 100%);
+            border-radius: 25px;
+            color: white;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 20px 50px;
+            background: white;
+            color: #1e3c72;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .card-content {
+                grid-template-columns: 1fr;
+            }
+            
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>🇺🇸 カリフォルニア海外研修 🇯🇵</h1>
+            <p>サンフランシスコ × シリコンバレー × ロサンゼルス</p>
+            <p style="font-size: 1.2em; margin-top: 10px;">研修＋観光で学びと体験が詰まった充実の日々</p>
+        </div>
+        <div class="scroll-indicator">↓</div>
+    </section>
+
+    <div class="container">
+        <section id="comparison">
+            <h2>日本との文化の違い</h2>
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="card-icon">🍔</div>
+                    <div class="card-title">食文化</div>
+                    <div class="card-content">
+                        <div class="country-section japan">
+                            <div class="country-label">🇯🇵 日本</div>
+                            <p>少量で繊細<br>ヘルシー志向<br>静かに食事</p>
+                        </div>
+                        <div class="country-section usa">
+                            <div class="country-label">🇺🇸 アメリカ</div>
+                            <p>大盛りサイズ<br>ボリューム重視<br>会話を楽しむ</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-card">
+                    <div class="card-icon">🚗</div>
+                    <div class="card-title">交通手段</div>
+                    <div class="card-content">
+                        <div class="country-section japan">
+                            <div class="country-label">🇯🇵 日本</div>
+                            <p>電車が主流<br>時間厳守<br>コンパクト</p>
+                        </div>
+                        <div class="country-section usa">
+                            <div class="country-label">🇺🇸 アメリカ</div>
+                            <p>車社会<br>広大な道路<br>ドライブスルー文化</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-card">
+                    <div class="card-icon">💬</div>
+                    <div class="card-title">コミュニケーション</div>
+                    <div class="card-content">
+                        <div class="country-section japan">
+                            <div class="country-label">🇯🇵 日本</div>
+                            <p>控えめな表現<br>察する文化<br>敬語重視</p>
+                        </div>
+                        <div class="country-section usa">
+                            <div class="country-label">🇺🇸 アメリカ</div>
+                            <p>率直な表現<br>フレンドリー<br>カジュアル</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-card">
+                    <div class="card-icon">💰</div>
+                    <div class="card-title">支払い文化</div>
+                    <div class="card-content">
+                        <div class="country-section japan">
+                            <div class="country-label">🇯🇵 日本</div>
+                            <p>現金主流<br>チップ不要<br>明朗会計</p>
+                        </div>
+                        <div class="country-section usa">
+                            <div class="country-label">🇺🇸 アメリカ</div>
+                            <p>カード社会<br>チップ必須（15-20%）<br>税金は別途</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-card">
+                    <div class="card-icon">🏠</div>
+                    <div class="card-title">住環境</div>
+                    <div class="card-content">
+                        <div class="country-section japan">
+                            <div class="country-label">🇯🇵 日本</div>
+                            <p>コンパクト<br>防音重視<br>靴を脱ぐ</p>
+                        </div>
+                        <div class="country-section usa">
+                            <div class="country-label">🇺🇸 アメリカ</div>
+                            <p>広々空間<br>庭付き一戸建て<br>土足OK</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-card">
+                    <div class="card-icon">🛍️</div>
+                    <div class="card-title">買い物</div>
+                    <div class="card-content">
+                        <div class="country-section japan">
+                            <div class="country-label">🇯🇵 日本</div>
+                            <p>コンビニ充実<br>丁寧な接客<br>小規模店舗</p>
+                        </div>
+                        <div class="country-section usa">
+                            <div class="country-label">🇺🇸 アメリカ</div>
+                            <p>大型スーパー<br>セルフサービス<br>倉庫型店舗</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="surprises">
+            <div class="surprise-section">
+                <h2 style="color: white;">特に驚いたポイント！</h2>
+                <div class="surprise-grid">
+                    <div class="surprise-item">
+                        <div class="surprise-icon">😲</div>
+                        <h3>飲み物サイズ</h3>
+                        <p>Sサイズが日本のLサイズ！</p>
+                    </div>
+                    <div class="surprise-item">
+                        <div class="surprise-icon">🤝</div>
+                        <h3>フレンドリー</h3>
+                        <p>知らない人とも気軽に会話</p>
+                    </div>
+                    <div class="surprise-item">
+                        <div class="surprise-icon">🚘</div>
+                        <h3>車が巨大</h3>
+                        <p>ピックアップトラックだらけ</p>
+                    </div>
+                    <div class="surprise-item">
+                        <div class="surprise-icon">💵</div>
+                        <h3>チップ計算</h3>
+                        <p>毎回15-20%を加算</p>
+                    </div>
+                    <div class="surprise-item">
+                        <div class="surprise-icon">🌎</div>
+                        <h3>多様性</h3>
+                        <p>様々な人種・文化が共存</p>
+                    </div>
+                    <div class="surprise-item">
+                        <div class="surprise-icon">🎉</div>
+                        <h3>ポジティブ</h3>
+                        <p>"Have a great day!"が口癖</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experiences">
+            <h2>研修＆観光で訪れた都市</h2>
+            <div class="experience-grid">
+                <div class="experience-item">
+                    <div class="experience-image">💻</div>
+                    <div class="experience-content">
+                        <div class="experience-title">シリコンバレー研修</div>
+                        <p>GoogleやAppleの本社訪問、スタートアップ企業見学で最先端のイノベーションを学ぶ</p>
+                    </div>
+                </div>
+                <div class="experience-item">
+                    <div class="experience-image">🌉</div>
+                    <div class="experience-content">
+                        <div class="experience-title">サンフランシスコ観光</div>
+                        <p>ゴールデンゲートブリッジ、フィッシャーマンズワーフ、坂道とケーブルカーの街並み</p>
+                    </div>
+                </div>
+                <div class="experience-item">
+                    <div class="experience-image">🎬</div>
+                    <div class="experience-content">
+                        <div class="experience-title">ロサンゼルス観光</div>
+                        <p>ハリウッド、サンタモニカビーチ、エンターテイメントの中心地を満喫</p>
+                    </div>
+                </div>
+                <div class="experience-item">
+                    <div class="experience-image">🎓</div>
+                    <div class="experience-content">
+                        <div class="experience-title">学びと体験</div>
+                        <p>研修で学んだビジネスの知識と、観光で感じた文化の違いの両方を体験</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2 style="color: white; border: none;">海外研修で得た、かけがえのない経験</h2>
+            <p style="font-size: 1.2em;">ビジネスの学びと観光の楽しさ、両方を体験できたカリフォルニア研修。<br>文化の違いを肌で感じることで、視野が大きく広がりました。</p>
+            <a href="#" class="cta-button">研修について詳しく見る</a>
+        </section>
+    </div>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        document.querySelector('.scroll-indicator').addEventListener('click', () => {
+            document.querySelector('#comparison').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
